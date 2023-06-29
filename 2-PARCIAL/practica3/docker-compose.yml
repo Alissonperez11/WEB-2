@@ -1,0 +1,49 @@
+version: '3'
+
+
+services:
+  paciente:
+    build: ./paciente
+    depends_on:
+      - datapaciente
+    environment:
+      - PORT=2900
+      - MONGODB_CNN=mongodb://datapaciente:27017/test
+    # ports:
+    #   - "2900:2900"
+  tipo_examen:
+    build: ./tipo_examen
+    depends_on:
+      - datatipo_examen
+    environment:
+      - PORT=2900
+      - MONGODB_CNN=mongodb://datatipo_examen:27017/test
+  resultado:
+    build: ./resultado
+    depends_on:
+      - dataresultado
+    environment:
+      - PORT=2900
+      - MONGODB_CNN=mongodb://dataresultado:27017/test    
+  datapaciente:
+    image: mongo
+    # ports:
+    #   - "27017:27017"
+  datatipo_examen:
+    image: mongo
+    # ports:
+    #   - "27017:27017"
+  dataresultado:
+    image: mongo
+    # ports:
+    #   - "27017:27017"
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - paciente
+      - tipo_examen
+      - resultado
