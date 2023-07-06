@@ -6,7 +6,7 @@ const getTipos = async (req,res = response )=>{
     const { limite = 10 , desde=0 } =  req.query;
     const query = { status:true };
 
-    const [ tipos ] = await Promise.all([
+    const [ ntipos_examen, tipos ] = await Promise.all([
         Tipo_Examen.countDocuments(query),
         Tipo_Examen.find(query)
         .skip(Number(desde))
@@ -14,7 +14,7 @@ const getTipos = async (req,res = response )=>{
     ]);
   
     res.json({
-       
+       ntipos_examen,
       tipos
     })
 }

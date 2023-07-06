@@ -18,7 +18,9 @@ const ResultadoSchema = Schema(   {
         type: Boolean,
         default: true,
         required:true
+        
     }
+
    
 }
 );

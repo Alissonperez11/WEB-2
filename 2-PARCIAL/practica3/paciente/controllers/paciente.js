@@ -6,7 +6,7 @@ const getPacientes = async (req,res = response )=>{
     const { limite = 10 , desde=0 } =  req.query;
     const query = { status:true };
 
-    const [ pacientes ] = await Promise.all([
+    const [ npacientes,pacientes ] = await Promise.all([
         Paciente.countDocuments(query),
         Paciente.find(query)
         .skip(Number(desde))
@@ -14,7 +14,7 @@ const getPacientes = async (req,res = response )=>{
     ]);
   
     res.json({
-    
+        npacientes,
       pacientes
     })
 }

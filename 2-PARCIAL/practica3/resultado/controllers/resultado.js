@@ -8,7 +8,7 @@ const getResultados= async (req, res = response )=>{
     const { limit = 10 , since=0 } =  req.query;
     const query = { status:true };
 
-    const [  resultados ] = await Promise.all([
+    const [ nresulados, resultados ] = await Promise.all([
         Resultado.countDocuments(query),
         Resultado.find(query)
         .skip(Number(since))
@@ -16,7 +16,7 @@ const getResultados= async (req, res = response )=>{
     ])
   
     res.json({
-      
+      nresulados,
       resultados
     })
     
